@@ -52,5 +52,17 @@ group :test do
   gem 'webdrivers'
 end
 
+group :development, :test do
+  gem 'rspec-rails', '~> 4.0.1'
+  gem 'guard-rspec', require: false
+  gem 'factory_bot_rails'
+  gem 'simplecov', :require => false
+  gem 'faker'
+  gem 'shoulda-matchers', '~> 4.0'
+  gem 'json_matchers'
+  gem 'rails-controller-testing'
+  gem 'shoulda-callback-matchers', '~> 1.1', '>= 1.1.4'
+end
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
