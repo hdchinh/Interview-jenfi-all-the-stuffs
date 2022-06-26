@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_24_150535) do
+ActiveRecord::Schema.define(version: 2022_06_26_063411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "customers", force: :cascade do |t|
+    t.string "name"
+    t.string "api_key"
+    t.boolean "active", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "lines", force: :cascade do |t|
     t.string "name"
@@ -22,4 +30,39 @@ ActiveRecord::Schema.define(version: 2022_06_24_150535) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "packages", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.integer "status", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "weight"
+    t.integer "volume"
+    t.bigint "line_id", null: false
+    t.index ["customer_id"], name: "index_packages_on_customer_id"
+    t.index ["line_id"], name: "index_packages_on_line_id"
+  end
+
+  create_table "train_operators", force: :cascade do |t|
+    t.string "name"
+    t.integer "total_trains", default: 0
+    t.string "api_key"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "trains", force: :cascade do |t|
+    t.integer "max_weight"
+    t.integer "max_volume"
+    t.float "cost"
+    t.bigint "train_operator_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "active", default: true
+    t.jsonb "lines", default: []
+    t.index ["train_operator_id"], name: "index_trains_on_train_operator_id"
+  end
+
+  add_foreign_key "packages", "customers"
+  add_foreign_key "packages", "lines"
+  add_foreign_key "trains", "train_operators"
 end
