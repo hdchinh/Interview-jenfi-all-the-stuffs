@@ -19,6 +19,7 @@ module Api
       # TODO: check this train is in service or not
 
       @train.update(active: false)
+      success_response(@train)
     end
 
     def status
