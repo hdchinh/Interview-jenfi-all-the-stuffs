@@ -12,4 +12,15 @@ RSpec.describe Line, type: :model do
       expect(line).to validate_uniqueness_of(:name)
     end
   end
+
+  describe ".activated" do
+    before do
+      create(:line, blocked: false)
+      create(:line, blocked: true)
+    end
+
+    it "returns active line only" do
+      expect(Line.activated.map(&:blocked).uniq).to eq([false])
+    end
+  end
 end

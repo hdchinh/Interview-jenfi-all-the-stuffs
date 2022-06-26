@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :train_operator do
-    name { "MyString" }
-    total_trains { 1 }
-    api_key { "MyString" }
+    name { Faker::Name.unique.name }
+    total_trains { 0 }
   end
 end

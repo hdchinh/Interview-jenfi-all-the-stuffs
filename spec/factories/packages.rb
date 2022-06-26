@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :package do
-    customer { nil }
-    status { 1 }
+    customer
+    status { 0 }
   end
 end

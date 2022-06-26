@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :customer do
-    name { "MyString" }
-    api_key { "MyString" }
-    active { false }
+    name { Faker::Name.name }
+    active { true }
   end
 end
