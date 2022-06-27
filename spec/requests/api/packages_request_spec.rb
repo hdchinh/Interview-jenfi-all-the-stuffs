@@ -1,6 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Packages", type: :request do
+  let!(:line) { create(:line) }
+  let!(:train) { create(:train, lines: [line.name]) }
+
   describe "POST /api/packages" do
     let(:url) { "/api/packages" }
     let(:headers) { { "Accept" => "application/json" } }

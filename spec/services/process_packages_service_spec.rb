@@ -4,6 +4,7 @@ RSpec.describe ProcessPackagesService do
   subject(:process_packages_service) { described_class.new(line) }
 
   let!(:line) { create(:line) }
+  let!(:train) { create(:train, lines: [line.name]) }
   let!(:package) { create(:package, line_id: line.id) }
 
   describe "#perform" do
@@ -12,7 +13,10 @@ RSpec.describe ProcessPackagesService do
 
     context "when has packages that are pending" do
       context "when cannot find a train" do
-        before { create(:train, lines: [line.name], status: Line.statuses[:unavailable]) }
+        before do
+          Train.destroy_all
+          create(:train, lines: [line.name], status: Line.statuses[:unavailable])
+        end
 
         it "returns false" do
           expect(process_packages_service.perform).to be false
@@ -40,6 +44,8 @@ RSpec.describe ProcessPackagesService do
     end
 
     context "when does not have packages that are pending" do
+      before { Package.destroy_all }
+
       it "returns false" do
         expect(process_packages_service.perform).to be false
       end

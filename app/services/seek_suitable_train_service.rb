@@ -6,7 +6,7 @@ class SeekSuitableTrainService
   end
 
   def perform
-    trains = Train.available.where("lines @> ?", "#{@line.name}".to_json)
+    trains = Train.where(active: true).available.where("lines @> ?", "#{@line.name}".to_json)
     return false if trains.blank?
 
     suitable_weight_train_ids = trains.where("max_weight >= ?", @total_weight).pluck(:id)

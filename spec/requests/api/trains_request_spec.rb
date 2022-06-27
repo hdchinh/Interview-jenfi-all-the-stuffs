@@ -96,9 +96,33 @@ RSpec.describe "Trains", type: :request do
     context "when request has a valid train_operator api_key" do
       let(:headers) { { "Accept" => "application/json", :"Authorization" => train_operator.api_key } }
 
-      it "returns :ok" do
-        put url, params: {}, headers: headers
-        expect(response).to have_http_status(:ok)
+      context "when status of the train is available" do
+        let!(:train) { create(:train, train_operator: train_operator, lines: [line.name], status: "available") }
+
+        before { put url, params: {}, headers: headers }
+
+        it "returns :ok" do
+          expect(response).to have_http_status(:ok)
+        end
+
+        it "updates train status" do
+          expect(train.reload.active).to be false
+        end
+      end
+
+      context "when status of the train is unavailable" do
+        let!(:train) { create(:train, train_operator: train_operator, lines: [line.name], status: "unavailable") }
+
+        before { put url, params: {}, headers: headers }
+
+        it "returns :bad_request" do
+          put url, params: {}, headers: headers
+          expect(response).to have_http_status(:bad_request)
+        end
+
+        it "does not update train status" do
+          expect(train.reload.active).to be true
+        end
       end
     end
   end
