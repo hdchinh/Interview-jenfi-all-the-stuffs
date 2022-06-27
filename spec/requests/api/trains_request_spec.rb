@@ -10,8 +10,8 @@ RSpec.describe "Trains", type: :request do
     context "when request is missing train_operator api_key" do
       before { post url, params: params, headers: headers }
 
-      it "returns :not_found" do
-        expect(response).to have_http_status(:not_found)
+      it "returns :bad_request" do
+        expect(response).to have_http_status(:bad_request)
       end
     end
 
@@ -37,8 +37,8 @@ RSpec.describe "Trains", type: :request do
     context "when request is missing train_operator api_key" do
       before { get url, params: {}, headers: headers }
 
-      it "returns :not_found" do
-        expect(response).to have_http_status(:not_found)
+      it "returns :bad_request" do
+        expect(response).to have_http_status(:bad_request)
       end
     end
 
@@ -63,8 +63,8 @@ RSpec.describe "Trains", type: :request do
     context "when request is missing train_operator api_key" do
       before { get url, params: {}, headers: headers }
 
-      it "returns :not_found" do
-        expect(response).to have_http_status(:not_found)
+      it "returns :bad_request" do
+        expect(response).to have_http_status(:bad_request)
       end
     end
 
@@ -88,8 +88,8 @@ RSpec.describe "Trains", type: :request do
     context "when request is missing train_operator api_key" do
       before { put url, params: {}, headers: headers }
 
-      it "returns :not_found" do
-        expect(response).to have_http_status(:not_found)
+      it "returns :bad_request" do
+        expect(response).to have_http_status(:bad_request)
       end
     end
 
