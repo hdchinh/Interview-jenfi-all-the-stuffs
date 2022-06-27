@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_26_063411) do
+ActiveRecord::Schema.define(version: 2022_06_27_084347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2022_06_26_063411) do
     t.boolean "blocked", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status", default: 0
   end
 
   create_table "packages", force: :cascade do |t|
@@ -35,8 +36,8 @@ ActiveRecord::Schema.define(version: 2022_06_26_063411) do
     t.integer "status", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "weight"
-    t.integer "volume"
+    t.float "weight"
+    t.float "volume"
     t.bigint "line_id", null: false
     t.index ["customer_id"], name: "index_packages_on_customer_id"
     t.index ["line_id"], name: "index_packages_on_line_id"
@@ -51,14 +52,15 @@ ActiveRecord::Schema.define(version: 2022_06_26_063411) do
   end
 
   create_table "trains", force: :cascade do |t|
-    t.integer "max_weight"
-    t.integer "max_volume"
+    t.float "max_weight"
+    t.float "max_volume"
     t.float "cost"
     t.bigint "train_operator_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "active", default: true
     t.jsonb "lines", default: []
+    t.integer "status", default: 0
     t.index ["train_operator_id"], name: "index_trains_on_train_operator_id"
   end
 

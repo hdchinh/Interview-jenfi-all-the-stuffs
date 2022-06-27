@@ -25,5 +25,9 @@ Rails
           put :withdraw
         end
       end
+
+      resources :post_masters do
+        collection { post :process_packages }
+      end
     end
   end

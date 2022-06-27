@@ -2,8 +2,12 @@ module Api
   class BaseController < ApplicationController
     include Response
 
+    rescue_from StandardError do |e|
+      error_response(e.message, :bad_request)
+    end
+
     rescue_from ActiveRecord::RecordNotFound do
-      error_response("Record not found or invalid/missing api_key", :not_found)
+      error_response("Record not found or missing params or invalid/missing api_key", :not_found)
     end
 
     protected
