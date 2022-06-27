@@ -13,8 +13,6 @@ module Api
     def status
       @package = @parcal_owner.packages.find(params[:id])
 
-      # TODO:
-
       success_response({ status: @package.status })
     end
 

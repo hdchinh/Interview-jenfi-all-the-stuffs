@@ -16,10 +16,12 @@ module Api
     def withdraw
       @train = @train_operator.trains.activated.find(params[:id])
 
-      # TODO: check this train is in service or not
-
-      @train.update(active: false)
-      success_response(@train)
+      if @train.unavailable?
+        error_response("This train is carrying packages, cannot withdraw now.")
+      else
+        @train.update(active: false)
+        success_response(@train)
+      end
     end
 
     def status
