@@ -15,6 +15,15 @@ https://youtu.be/-5DR7Ea8TIg
 
 **Need to seed the lines by calling `rails db:seed`**
 
+**Docker setup**
+
+```
+docker-compose build
+```
+
+```
+docker-compose up
+```
 # 3. Use cases
 
 1. As a train operator
